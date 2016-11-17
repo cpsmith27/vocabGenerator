@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Vocabulary from file "test.txt".</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        box-sizing: border-box;
+      }
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
+      #vocab-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+      .vocab-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        border: 2px solid black;
+        margin: 5px;
+        padding: 10px;
+        text-align: center;
+      }
+      .character {
+        font-size: 24px;
+        height: 35px;
+        line-height: 35px;
+        vertical-align: top;
+      }
+      .pinyin {
+        font-style: italic;
+      }
+      .definitions {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="vocab-container">
+      <div class="vocab-item">
+        <span class="character">你 [你]</span>
+        <span class="pinyin">ni3</span>
+        <span class="definitions">you (informal, as opposed to courteous 您[nin2])</span>
+      </div>
+      <div class="vocab-item">
+        <span class="character">你好 [你好]</span>
+        <span class="pinyin">ni3 hao3</span>
+        <span class="definitions">Hello!<br>Hi!<br>How are you?</span>
+      </div>
+      <div class="vocab-item">
+        <span class="character">好 [好]</span>
+        <span class="pinyin">hao3</span>
+        <span class="definitions">good<br>well<br>proper<br>good to<br>easy to<br>very<br>so<br>(suffix indicating completion or readiness)<br>(of two people) close<br>on intimate terms</span>
+      </div>
+      <div class="vocab-item">
+        <span class="character">爱 [愛]</span>
+        <span class="pinyin">ai4</span>
+        <span class="definitions">to love<br>to be fond of<br>to like<br>affection<br>to be inclined (to do sth)<br>to tend to (happen)</span>
+      </div>
+    </div>
+  </body>
+</html>
