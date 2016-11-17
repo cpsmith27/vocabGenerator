@@ -9,10 +9,10 @@ def loadDict
       definitions.delete("")
       line.sub!(/\/.*\//, '')
 
-      pinyin = line.match(/\[[ ,0-9a-z]*\]/).to_s
+      pinyin = line.match(/\[.*\]/).to_s
       pinyin.sub!(/\[/, '')
       pinyin.sub!(/\]/, '')
-      line.sub!(/\[[ ,0-9a-z]*\]/,'')
+      line.sub!(/\[.*\]/,'')
 
       tokens = line.strip().split(" ")
 
@@ -34,6 +34,11 @@ def loadDict
   return entries
 end
 
+def loadYAML
+  entries = YAML::load_file "dict.yaml"
+  return entries
+end
+
 def search(entries, item)
   if (item != nil && item.length <= 20)
     entries[item.length].each do |entry|
@@ -51,14 +56,28 @@ def getVocabItems(entries, line)
   vocabItems = {}
 
   groups.each do |group|
-    for i in 0..group.length
-      for j in i..19
-        break if j >= group.length
-        entry = search(entries, group[i..j])
-        if (entry != nil && !vocabItems.has_key?(entry["simplified"]))
-          vocabItems[entry["simplified"]] = entry
+    i = 0;
+    while i < group.length
+      j = i + 19
+      while j >= i
+        if j >= group.length
+          j = group.length - 1
+          next
         end
+
+        entry = search(entries, group[i..j])
+
+        if (entry != nil)
+          if (!vocabItems.has_key?(entry["simplified"]))
+            vocabItems[entry["simplified"]] = entry
+          end
+          break
+        end
+
+        j = j - 1
       end
+
+      i = j + 1
     end
   end
 
@@ -66,7 +85,7 @@ def getVocabItems(entries, line)
 end
 
 def getVocabFromFile(filePath)
-  dict = loadDict
+  dict = loadYAML
   file = File.new(filePath, "r")
 
   vocabItems = {}
@@ -86,46 +105,9 @@ def genHTML(file)
 <html>
   <head>
     <title>Vocabulary from file \"#{file}\".</title>
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        font-family: sans-serif;
-        box-sizing: border-box;
-      }
-      html, body {
-        width: 100%;
-        height: 100%;
-      }
-      #vocab-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
-      }
-      .vocab-item {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        border: 2px solid black;
-        margin: 5px;
-        padding: 10px;
-        text-align: center;
-      }
-      .character {
-        font-size: 24px;
-        height: 35px;
-        line-height: 35px;
-        vertical-align: top;
-      }
-      .pinyin {
-        font-style: italic;
-      }
-      .definitions {
-        display: none;
-      }
-    </style>
+    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js\"></script>
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"vocab.css\">
+    <script src=\"vocab.js\"></script>
   </head>
   <body>
     <div id=\"vocab-container\">")
