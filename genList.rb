@@ -110,6 +110,8 @@ def genHTML(file)
     <script src=\"vocab.js\"></script>
   </head>
   <body>
+    <div id=\"toggle\">Toggle Hide</div>
+    <div id=\"toggle-pinyin\">Toggle Pinyin</div>
     <div id=\"vocab-container\">")
 
   vocab.each_value do |item|
